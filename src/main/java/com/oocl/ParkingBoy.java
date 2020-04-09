@@ -1,8 +1,9 @@
 package com.oocl;
 
 public class ParkingBoy {
+    public final static String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private ParkingLot parkingLot;
-
+    private String perviousErrorMsg;
     public ParkingBoy(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
@@ -18,6 +19,14 @@ public class ParkingBoy {
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
+        if (!this.parkingLot.isTicketExist(parkingTicket)) {
+            perviousErrorMsg = UNRECOGNIZED_PARKING_TICKET;
+            return null;
+        }
         return this.parkingLot.fetch(parkingTicket);
+    }
+
+    public String queryError() {
+        return perviousErrorMsg;
     }
 }

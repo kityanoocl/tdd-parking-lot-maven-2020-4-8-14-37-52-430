@@ -23,6 +23,10 @@ public class ParkingLot {
         return parkingMap.size() == capacity;
     }
 
+    public boolean isTicketExist(ParkingTicket parkingTicket) {
+        return parkingMap.containsKey(parkingTicket);
+    }
+
     public void park(ParkingTicket parkingTicket, Car car) {
         parkingMap.put(parkingTicket, car);
     }

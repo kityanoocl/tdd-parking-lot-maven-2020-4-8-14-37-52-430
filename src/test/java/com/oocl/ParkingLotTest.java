@@ -40,4 +40,11 @@ public class ParkingLotTest {
         parkingLot.park(new ParkingTicket(), car);
         Assert.assertTrue(parkingLot.isCarParked(car));
     }
+
+    @Test
+    public void should_return_false_if_no_parking_ticket_found() {
+        Car car = new Car();
+        parkingLot.park(new ParkingTicket(), car);
+        Assert.assertFalse(parkingLot.isTicketExist(new ParkingTicket()));
+    }
 }
