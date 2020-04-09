@@ -47,4 +47,11 @@ public class ParkingLotTest {
         parkingLot.park(new ParkingTicket(), car);
         Assert.assertFalse(parkingLot.isTicketExist(new ParkingTicket()));
     }
+
+    @Test
+    public void should_return_empty_slots() {
+        Car car = new Car();
+        parkingLot.park(new ParkingTicket(), car);
+        Assert.assertEquals(9, parkingLot.getNumberOfEmptySlots());
+    }
 }
