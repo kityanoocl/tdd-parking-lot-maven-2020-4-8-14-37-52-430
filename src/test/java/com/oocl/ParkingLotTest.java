@@ -28,4 +28,11 @@ public class ParkingLotTest {
         int capacity = parkingLot.getCapacity();
         Assert.assertEquals(7, capacity);
     }
+
+    @Test
+    public void should_return_parking_lot_is_full() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        parkingLot.park(new ParkingTicket(), new Car());
+        Assert.assertEquals(true, parkingLot.isFull());
+    }
 }
