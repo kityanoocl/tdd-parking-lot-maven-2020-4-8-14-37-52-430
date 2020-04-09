@@ -7,6 +7,7 @@ public class ParkingLot {
     public static final int DEFAULT_CAPACITY = 10;
     private int capacity;
     private Map<ParkingTicket, Car> parkingMap = new HashMap<>();
+
     public ParkingLot() {
         this.capacity = DEFAULT_CAPACITY;
     }

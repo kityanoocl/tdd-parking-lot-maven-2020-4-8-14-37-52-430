@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ParkingLotServiceManager extends ParkingBoy {
     private List<ParkingBoy> parkingBoys = new ArrayList<>();
+
     public ParkingLotServiceManager(ParkingLot... parkingLots) {
         super(parkingLots);
     }
@@ -19,7 +20,7 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public ParkingTicket park(ParkingBoy selectedParkingBoy, Car car) {
-        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy-> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
+        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy -> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
         if (isParkingBoyNotExist) {
             return null;
         }
@@ -27,7 +28,7 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public Car fetch(ParkingBoy selectedParkingBoy, ParkingTicket parkingTicket) {
-        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy-> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
+        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy -> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
         if (isParkingBoyNotExist) {
             return null;
         }

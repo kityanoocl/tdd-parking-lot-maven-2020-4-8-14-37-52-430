@@ -11,6 +11,7 @@ public class SmartParkingBoyTest {
     SmartParkingBoy smartParkingBoy;
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
+
     @Before
     public void setBefore() {
         parkingLot = new ParkingLot();

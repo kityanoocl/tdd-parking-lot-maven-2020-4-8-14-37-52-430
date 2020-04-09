@@ -26,7 +26,7 @@ public class ParkingBoy {
     }
 
     public ParkingLot getCarExistParkingLot(Car car) {
-       return parkingLots.stream().filter(parkingLot -> parkingLot.isCarParked(car)).findFirst().orElse(null);
+        return parkingLots.stream().filter(parkingLot -> parkingLot.isCarParked(car)).findFirst().orElse(null);
     }
 
     public boolean canParkCar(Car car) {
@@ -37,7 +37,7 @@ public class ParkingBoy {
         boolean canParkCar = true;
         if (isCarNull || isAlreadyPark) {
             canParkCar = false;
-        }else if (isFull) {
+        } else if (isFull) {
             previousErrorMsg = NOT_ENOUGH_POSITION;
             throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
         }

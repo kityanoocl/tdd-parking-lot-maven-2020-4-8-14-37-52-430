@@ -15,6 +15,7 @@ public class ParkingLotServiceManagerTest {
     ParkingLotServiceManager parkingLotServiceManager;
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
+
     @Before
     public void setBefore() {
         parkingLot = new ParkingLot();
