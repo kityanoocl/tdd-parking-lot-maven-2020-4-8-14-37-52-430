@@ -81,10 +81,10 @@ public class SmartParkingBoyTest {
     @Test
     public void should_return_not_enough_position_if_parking_lot_is_full() {
         ParkingLot parkingLot = new ParkingLot(1);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
-        parkingBoy.park(new Car());
-        parkingBoy.park(new Car());
-        Assert.assertEquals("Not enough position.", parkingBoy.queryError());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        smartParkingBoy.park(new Car());
+        smartParkingBoy.park(new Car());
+        Assert.assertEquals("Not enough position.", smartParkingBoy.queryError());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SmartParkingBoyTest {
     }
 
     @Test
-    public void should_park_car_in_more_empty_slot_parking() {
+    public void should_park_car_in_more_empty_slot_parking_lot() {
         ParkingLot parkingLot1 = new ParkingLot();
         ParkingLot parkingLot2 = new ParkingLot(100);
         ParkingLot[] parkingLots = {parkingLot1, parkingLot2};
