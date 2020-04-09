@@ -8,7 +8,7 @@ public class ParkingBoy {
     public final static String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     public final static String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please provide your parking ticket.";
     public final static String NOT_ENOUGH_POSITION = "Not enough position.";
-    private List<ParkingLot> parkingLots = new ArrayList<>();
+    protected List<ParkingLot> parkingLots = new ArrayList<>();
     private ParkingLot selectedParkingLot;
     private String previousErrorMsg;
 
@@ -17,7 +17,7 @@ public class ParkingBoy {
         this.selectedParkingLot = this.parkingLots.stream().findFirst().orElse(null);
     }
 
-    public ParkingLot getNotFullParkingLot() {
+    public ParkingLot getAvailableParkingLot() {
         return parkingLots.stream().filter(parkingLot -> !parkingLot.isFull()).findFirst().orElse(null);
     }
 
@@ -30,7 +30,7 @@ public class ParkingBoy {
     }
 
     public boolean canParkCar(Car car) {
-        selectedParkingLot = getNotFullParkingLot();
+        selectedParkingLot = getAvailableParkingLot();
         boolean isCarNull = car == null;
         boolean isAlreadyPark = getCarExistParkingLot(car) != null;
         boolean isFull = selectedParkingLot == null;
