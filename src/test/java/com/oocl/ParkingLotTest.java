@@ -8,9 +8,11 @@ import static org.junit.Assert.*;
 
 public class ParkingLotTest {
     ParkingLot parkingLot;
+    ParkingBoy parkingBoy;
     @Before
     public void setBefore() {
         parkingLot = new ParkingLot();
+        parkingBoy = new ParkingBoy(parkingLot);
     }
     @Test
     public void should_return_capacity_of_parking_lot() {
@@ -26,14 +28,12 @@ public class ParkingLotTest {
 
     @Test
     public void should_return_parking_ticket_when_parking_boy_park() {
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         ParkingTicket parkingTicket = parkingBoy.park(new Car());
         Assert.assertNotNull(parkingTicket);
     }
 
     @Test
     public void should_return_car_when_parking_boy_fetch() {
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
         ParkingTicket parkingTicket = parkingBoy.park(car);
         Car carThatFetch = parkingBoy.fetch(parkingTicket);
@@ -42,11 +42,19 @@ public class ParkingLotTest {
 
     @Test
     public void should_not_return_car_when_parking_ticket_used() {
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
         ParkingTicket parkingTicket = parkingBoy.park(car);
         parkingBoy.fetch(parkingTicket);
         Car carThatFetch = parkingBoy.fetch(parkingTicket);
         Assert.assertNull(carThatFetch);
+    }
+
+    @Test
+    public void should_not_return_parking_ticket_when_parking_lot_fulled() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        parkingBoy.park(new Car());
+        ParkingTicket parkingTicket = parkingBoy.park(new Car());
+        Assert.assertNull(parkingTicket);
     }
 }

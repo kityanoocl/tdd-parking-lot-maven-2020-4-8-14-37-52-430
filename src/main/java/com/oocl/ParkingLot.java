@@ -19,6 +19,10 @@ public class ParkingLot {
         return this.capacity;
     }
 
+    public boolean isFull() {
+        return parkingMap.size() == capacity;
+    }
+
     public void park(ParkingTicket parkingTicket, Car car) {
         parkingMap.put(parkingTicket, car);
     }
