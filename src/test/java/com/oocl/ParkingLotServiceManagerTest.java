@@ -4,6 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ParkingLotServiceManagerTest {
     ParkingLot parkingLot;
     ParkingLotServiceManager parkingLotServiceManager;
@@ -98,5 +102,16 @@ public class ParkingLotServiceManagerTest {
         ParkingTicket parkingTicket = parkingLotServiceManager.park(car);
         Car carThatFetch = parkingLot2.fetch(parkingTicket);
         Assert.assertEquals(car, carThatFetch);
+    }
+
+    @Test
+    public void should_add_3_types_of_parking_boys_in_management_list() {
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        Assert.assertEquals(Arrays.asList(parkingBoys),
+                parkingLotServiceManager.getManagementList());
     }
 }
