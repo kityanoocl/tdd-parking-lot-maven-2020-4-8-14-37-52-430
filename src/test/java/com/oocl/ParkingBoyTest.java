@@ -77,4 +77,13 @@ public class ParkingBoyTest {
         parkingBoy.fetch(null);
         Assert.assertEquals("Please provide your parking ticket.", parkingBoy.queryError());
     }
+
+    @Test
+    public void should_return_not_enough_position_if_parking_lot_is_full() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        Assert.assertEquals("Not enough position.", parkingBoy.queryError());
+    }
 }
