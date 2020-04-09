@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingBoyTest {
     ParkingLot parkingLot;
     ParkingBoy parkingBoy;
@@ -85,5 +88,18 @@ public class ParkingBoyTest {
         parkingBoy.park(new Car());
         parkingBoy.park(new Car());
         Assert.assertEquals("Not enough position.", parkingBoy.queryError());
+    }
+
+    @Test
+    public void should_park_car_in_parking_lot_2_for_a_parking_boy() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot();
+        ParkingLot parkingLots[] = {parkingLot1, parkingLot2};
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        ParkingTicket parkingTicket = parkingBoy.park(car);
+        Car carThatFetch = parkingLot2.fetch(parkingTicket);
+        Assert.assertEquals(car, carThatFetch);
     }
 }

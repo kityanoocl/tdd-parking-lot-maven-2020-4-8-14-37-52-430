@@ -1,23 +1,42 @@
 package com.oocl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ParkingBoy {
     public final static String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     public final static String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please provide your parking ticket.";
     public final static String NOT_ENOUGH_POSITION = "Not enough position.";
-    private ParkingLot parkingLot;
+    private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+    private ParkingLot selectedParkingLot;
     private String previousErrorMsg;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingBoy(ParkingLot... parkingLots) {
+        this.parkingLots.addAll(Arrays.asList(parkingLots));
+        this.selectedParkingLot = this.parkingLots.stream().findFirst().orElse(null);
+    }
+
+    public ParkingLot getNotFullParkingLot() {
+        return parkingLots.stream().filter(parkingLot -> !parkingLot.isFull()).findFirst().orElse(null);
+    }
+
+    public ParkingLot getCarExistParkingLot(ParkingTicket parkingTicket) {
+        return parkingLots.stream().filter(parkingLot -> parkingLot.isTicketExist(parkingTicket)).findFirst().orElse(null);
+    }
+
+    public ParkingLot getCarExistParkingLot(Car car) {
+       return parkingLots.stream().filter(parkingLot -> parkingLot.isCarParked(car)).findFirst().orElse(null);
     }
 
     public boolean canParkCar(Car car) {
         boolean isCarNull = car == null;
+        boolean isAlreadyPark = getCarExistParkingLot(car) != null;
         boolean canParkCar = true;
-        if (isCarNull || this.parkingLot.isCarParked(car)) {
+        selectedParkingLot = getNotFullParkingLot();
+        if (isCarNull || isAlreadyPark) {
             canParkCar = false;
-        }
-        if (this.parkingLot.isFull()) {
+        }else if (selectedParkingLot.isFull()) {
             previousErrorMsg = NOT_ENOUGH_POSITION;
             canParkCar = false;
         }
@@ -29,28 +48,29 @@ public class ParkingBoy {
             return null;
         }
         ParkingTicket parkingTicket = new ParkingTicket();
-        this.parkingLot.park(parkingTicket, car);
+        selectedParkingLot.park(parkingTicket, car);
         return parkingTicket;
     }
 
-    public boolean canRetrieveCar(ParkingTicket parkingTicket) {
-        boolean isAbleToRetrieveCar = true;
+    public boolean canFetchCar(ParkingTicket parkingTicket) {
+        selectedParkingLot = getCarExistParkingLot(parkingTicket);
+        boolean canFetchCar = true;
         if (parkingTicket == null) {
             previousErrorMsg = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
-            isAbleToRetrieveCar = false;
-        } else if (!this.parkingLot.isTicketExist(parkingTicket)) {
+            canFetchCar = false;
+        } else if (selectedParkingLot == null) {
             previousErrorMsg = UNRECOGNIZED_PARKING_TICKET;
-            isAbleToRetrieveCar = false;
+            canFetchCar = false;
         }
 
-        return isAbleToRetrieveCar;
+        return canFetchCar;
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
-        if (!canRetrieveCar(parkingTicket)) {
+        if (!canFetchCar(parkingTicket)) {
             return null;
         }
-        return this.parkingLot.fetch(parkingTicket);
+        return selectedParkingLot.fetch(parkingTicket);
     }
 
     public String queryError() {
