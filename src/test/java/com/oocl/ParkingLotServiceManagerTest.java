@@ -114,4 +114,18 @@ public class ParkingLotServiceManagerTest {
         Assert.assertEquals(Arrays.asList(parkingBoys),
                 parkingLotServiceManager.getManagementList());
     }
+
+    @Test
+    public void should_specify_parking_boy_to_park_a_car() {
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        ParkingLot parkingLot = new ParkingLot(3);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        Car car = new Car();
+        ParkingTicket parkingTicket = parkingLotServiceManager.park(smartParkingBoy, car);
+        Car carThatFetch = smartParkingBoy.fetch(parkingTicket);
+        Assert.assertEquals(car, carThatFetch);
+    }
 }
