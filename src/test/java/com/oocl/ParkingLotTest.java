@@ -33,4 +33,11 @@ public class ParkingLotTest {
         parkingLot.park(new ParkingTicket(), new Car());
         Assert.assertEquals(true, parkingLot.isFull());
     }
+
+    @Test
+    public void should_return_true_if_same_car_parked() {
+        Car car = new Car();
+        parkingLot.park(new ParkingTicket(), car);
+        Assert.assertEquals(true, parkingLot.isCarParked(car));
+    }
 }

@@ -30,4 +30,8 @@ public class ParkingLot {
     public Car fetch(ParkingTicket parkingTicket) {
         return parkingMap.remove(parkingTicket);
     }
+
+    public boolean isCarParked(Car car) {
+        return parkingMap.containsValue(car);
+    }
 }
