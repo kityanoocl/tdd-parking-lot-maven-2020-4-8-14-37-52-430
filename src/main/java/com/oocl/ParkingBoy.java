@@ -39,7 +39,7 @@ public class ParkingBoy {
             canParkCar = false;
         }else if (isFull) {
             previousErrorMsg = NOT_ENOUGH_POSITION;
-            canParkCar = false;
+            throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
         }
         return canParkCar;
     }

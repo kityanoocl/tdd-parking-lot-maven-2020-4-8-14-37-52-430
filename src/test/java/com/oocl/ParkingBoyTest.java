@@ -44,11 +44,12 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_return_parking_ticket_when_parking_lot_fulled() {
+        exceptionRule.expect(NotEnoughPositionException.class);
+        exceptionRule.expectMessage("Not enough position.");
         ParkingLot parkingLot = new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         parkingBoy.park(new Car());
         ParkingTicket parkingTicket = parkingBoy.park(new Car());
-        Assert.assertNull(parkingTicket);
     }
 
     @Test
@@ -88,11 +89,12 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_not_enough_position_if_parking_lot_is_full() {
+        exceptionRule.expect(NotEnoughPositionException.class);
+        exceptionRule.expectMessage("Not enough position.");
         ParkingLot parkingLot = new ParkingLot(1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         parkingBoy.park(new Car());
         parkingBoy.park(new Car());
-        Assert.assertEquals("Not enough position.", parkingBoy.queryError());
     }
 
     @Test
