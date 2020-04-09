@@ -8,7 +8,8 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) {
-        if (this.parkingLot.isFull()) {
+        boolean isCarNull = car == null;
+        if (this.parkingLot.isFull() || isCarNull) {
             return null;
         }
         ParkingTicket parkingTicket = new ParkingTicket();
