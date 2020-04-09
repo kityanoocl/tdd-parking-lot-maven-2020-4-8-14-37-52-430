@@ -59,9 +59,10 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_car_ticket_when_no_parking_ticket_pass() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
         parkingBoy.park(new Car());
         Car car = parkingBoy.fetch(null);
-        Assert.assertNull(car);
     }
 
     @Test
@@ -80,8 +81,9 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_please_provide_your_parking_ticket_if_no_parking_ticket_provided() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
         parkingBoy.fetch(null);
-        Assert.assertEquals("Please provide your parking ticket.", parkingBoy.queryError());
     }
 
     @Test

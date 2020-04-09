@@ -55,17 +55,15 @@ public class ParkingBoy {
 
     public boolean canFetchCar(ParkingTicket parkingTicket) {
         selectedParkingLot = getCarExistParkingLot(parkingTicket);
-        boolean canFetchCar = true;
         if (parkingTicket == null) {
             previousErrorMsg = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
-            canFetchCar = false;
+            throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         } else if (selectedParkingLot == null) {
             previousErrorMsg = UNRECOGNIZED_PARKING_TICKET;
-            canFetchCar = false;
             throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
         }
 
-        return canFetchCar;
+        return true;
     }
 
     public Car fetch(ParkingTicket parkingTicket) {

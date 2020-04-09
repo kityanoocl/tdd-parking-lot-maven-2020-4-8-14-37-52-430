@@ -62,9 +62,10 @@ public class ParkingLotServiceManagerTest {
 
     @Test
     public void should_not_car_ticket_when_no_parking_ticket_pass() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
         parkingLotServiceManager.park(new Car());
         Car car = parkingLotServiceManager.fetch(null);
-        Assert.assertNull(car);
     }
 
     @Test
@@ -83,8 +84,9 @@ public class ParkingLotServiceManagerTest {
 
     @Test
     public void should_return_please_provide_your_parking_ticket_if_no_parking_ticket_provided() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
         parkingLotServiceManager.fetch(null);
-        Assert.assertEquals("Please provide your parking ticket.", parkingLotServiceManager.queryError());
     }
 
     @Test
