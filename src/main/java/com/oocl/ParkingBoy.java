@@ -30,13 +30,14 @@ public class ParkingBoy {
     }
 
     public boolean canParkCar(Car car) {
+        selectedParkingLot = getNotFullParkingLot();
         boolean isCarNull = car == null;
         boolean isAlreadyPark = getCarExistParkingLot(car) != null;
+        boolean isFull = selectedParkingLot == null;
         boolean canParkCar = true;
-        selectedParkingLot = getNotFullParkingLot();
         if (isCarNull || isAlreadyPark) {
             canParkCar = false;
-        }else if (selectedParkingLot.isFull()) {
+        }else if (isFull) {
             previousErrorMsg = NOT_ENOUGH_POSITION;
             canParkCar = false;
         }
