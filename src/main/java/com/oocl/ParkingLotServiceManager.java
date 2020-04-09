@@ -25,4 +25,12 @@ public class ParkingLotServiceManager extends ParkingBoy {
         }
         return selectedParkingBoy.park(car);
     }
+
+    public Car fetch(ParkingBoy selectedParkingBoy, ParkingTicket parkingTicket) {
+        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy-> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
+        if (isParkingBoyNotExist) {
+            return null;
+        }
+        return selectedParkingBoy.fetch(parkingTicket);
+    }
 }
