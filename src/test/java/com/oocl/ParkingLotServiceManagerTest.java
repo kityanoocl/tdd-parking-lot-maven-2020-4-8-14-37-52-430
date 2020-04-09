@@ -151,4 +151,47 @@ public class ParkingLotServiceManagerTest {
         Car carThatFetch = parkingLotServiceManager.fetch(smartParkingBoy, parkingTicket);
         Assert.assertEquals(car, carThatFetch);
     }
+
+    @Test
+    public void should_get_same_message_when_parking_boy_fail_to_park() {
+        exceptionRule.expect(NotEnoughPositionException.class);
+        exceptionRule.expectMessage("Not enough position.");
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        smartParkingBoy.park(new Car());
+        parkingLotServiceManager.park(smartParkingBoy, new Car());
+    }
+
+    @Test
+    public void should_get_same_message_when_parking_boy_gets_a_null_ticket() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingLotServiceManager.fetch(smartParkingBoy, null);
+    }
+
+    @Test
+    public void should_get_same_message_when_parking_boy_gets_a_wrong_ticket() {
+        exceptionRule.expect(UnrecognizedParkingTicketException.class);
+        exceptionRule.expectMessage("Unrecognized parking ticket.");
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingLotServiceManager.fetch(smartParkingBoy, new ParkingTicket());
+    }
 }
