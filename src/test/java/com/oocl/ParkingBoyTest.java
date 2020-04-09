@@ -58,4 +58,11 @@ public class ParkingBoyTest {
         Car car = parkingBoy.fetch(null);
         Assert.assertNull(car);
     }
+
+    @Test
+    public void should_not_car_ticket_when_same_car_pass() {
+        Car car = new Car();
+        parkingBoy.park(car);
+        Assert.assertNull(parkingBoy.park(car));
+    }
 }

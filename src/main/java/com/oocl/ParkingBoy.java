@@ -9,7 +9,7 @@ public class ParkingBoy {
 
     public ParkingTicket park(Car car) {
         boolean isCarNull = car == null;
-        if (this.parkingLot.isFull() || isCarNull) {
+        if (isCarNull || this.parkingLot.isFull() || this.parkingLot.isCarParked(car)) {
             return null;
         }
         ParkingTicket parkingTicket = new ParkingTicket();
