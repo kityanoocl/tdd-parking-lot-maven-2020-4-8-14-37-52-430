@@ -31,13 +31,13 @@ public class ParkingLotTest {
     public void should_return_parking_lot_is_full() {
         ParkingLot parkingLot = new ParkingLot(1);
         parkingLot.park(new ParkingTicket(), new Car());
-        Assert.assertEquals(true, parkingLot.isFull());
+        Assert.assertTrue(parkingLot.isFull());
     }
 
     @Test
     public void should_return_true_if_same_car_parked() {
         Car car = new Car();
         parkingLot.park(new ParkingTicket(), car);
-        Assert.assertEquals(true, parkingLot.isCarParked(car));
+        Assert.assertTrue(parkingLot.isCarParked(car));
     }
 }
