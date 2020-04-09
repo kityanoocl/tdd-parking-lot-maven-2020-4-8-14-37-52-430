@@ -12,4 +12,10 @@ public class ParkingLotTest {
         int capacity = parkingLot.getCapacity();
         Assert.assertEquals(10, capacity);
     }
+    @Test
+    public void should_return_user_defined_capacity_of_parking_lot() {
+        ParkingLot parkingLot = new ParkingLot(7);
+        int capacity = parkingLot.getCapacity();
+        Assert.assertEquals(7, capacity);
+    }
 }

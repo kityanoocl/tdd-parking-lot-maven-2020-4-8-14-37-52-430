@@ -7,6 +7,10 @@ public class ParkingLot {
         this.capacity = DEFAULT_CAPACITY;
     }
 
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
+    }
+
     public int getCapacity() {
         return this.capacity;
     }
