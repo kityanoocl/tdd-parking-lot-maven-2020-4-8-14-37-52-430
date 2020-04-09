@@ -2,12 +2,15 @@ package com.oocl;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class SuperSmartParkingBoyTest {
     ParkingLot parkingLot;
     SuperSmartParkingBoy superSmartParkingBoy;
-
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
     @Before
     public void setBefore() {
         parkingLot = new ParkingLot();
@@ -30,11 +33,12 @@ public class SuperSmartParkingBoyTest {
 
     @Test
     public void should_not_return_car_when_parking_ticket_used() {
+        exceptionRule.expect(UnrecognizedParkingTicketException.class);
+        exceptionRule.expectMessage("Unrecognized parking ticket.");
         Car car = new Car();
         ParkingTicket parkingTicket = superSmartParkingBoy.park(car);
         superSmartParkingBoy.fetch(parkingTicket);
         Car carThatFetch = superSmartParkingBoy.fetch(parkingTicket);
-        Assert.assertNull(carThatFetch);
     }
 
     @Test
@@ -68,8 +72,9 @@ public class SuperSmartParkingBoyTest {
 
     @Test
     public void should_get_unrecognized_parking_ticket_if_query_error_msg() {
+        exceptionRule.expect(UnrecognizedParkingTicketException.class);
+        exceptionRule.expectMessage("Unrecognized parking ticket.");
         superSmartParkingBoy.fetch(new ParkingTicket());
-        Assert.assertEquals("Unrecognized parking ticket.", superSmartParkingBoy.queryError());
     }
 
     @Test

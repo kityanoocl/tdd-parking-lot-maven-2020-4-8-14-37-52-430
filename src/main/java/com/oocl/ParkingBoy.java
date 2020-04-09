@@ -62,6 +62,7 @@ public class ParkingBoy {
         } else if (selectedParkingLot == null) {
             previousErrorMsg = UNRECOGNIZED_PARKING_TICKET;
             canFetchCar = false;
+            throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
         }
 
         return canFetchCar;
