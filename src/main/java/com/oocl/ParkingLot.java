@@ -42,4 +42,8 @@ public class ParkingLot {
     public boolean isCarParked(Car car) {
         return parkingMap.containsValue(car);
     }
+
+    public double getPositionRate() {
+        return (this.capacity - parkingMap.size()) / (this.capacity * 1.0);
+    }
 }
