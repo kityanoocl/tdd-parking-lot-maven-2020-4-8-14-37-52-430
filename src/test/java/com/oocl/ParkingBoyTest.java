@@ -94,7 +94,7 @@ public class ParkingBoyTest {
     public void should_park_car_in_parking_lot_2_for_a_parking_boy() {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot();
-        ParkingLot parkingLots[] = {parkingLot1, parkingLot2};
+        ParkingLot[] parkingLots = {parkingLot1, parkingLot2};
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         parkingBoy.park(new Car());
         Car car = new Car();

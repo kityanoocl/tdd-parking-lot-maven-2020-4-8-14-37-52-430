@@ -8,7 +8,7 @@ public class ParkingBoy {
     public final static String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     public final static String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please provide your parking ticket.";
     public final static String NOT_ENOUGH_POSITION = "Not enough position.";
-    private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+    private List<ParkingLot> parkingLots = new ArrayList<>();
     private ParkingLot selectedParkingLot;
     private String previousErrorMsg;
 
