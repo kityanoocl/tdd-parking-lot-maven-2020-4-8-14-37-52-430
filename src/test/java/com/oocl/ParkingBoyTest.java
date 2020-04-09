@@ -71,4 +71,10 @@ public class ParkingBoyTest {
         parkingBoy.fetch(new ParkingTicket());
         Assert.assertEquals("Unrecognized parking ticket.", parkingBoy.queryError());
     }
+
+    @Test
+    public void should_return_please_provide_your_parking_ticket_if_no_parking_ticket_provided() {
+        parkingBoy.fetch(null);
+        Assert.assertEquals("Please provide your parking ticket.", parkingBoy.queryError());
+    }
 }
