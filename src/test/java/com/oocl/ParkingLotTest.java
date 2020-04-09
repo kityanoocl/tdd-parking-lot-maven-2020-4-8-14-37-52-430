@@ -1,14 +1,19 @@
 package com.oocl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class ParkingLotTest {
+    ParkingLot parkingLot;
+    @Before
+    public void setBefore() {
+        parkingLot = new ParkingLot();
+    }
     @Test
     public void should_return_capacity_of_parking_lot() {
-        ParkingLot parkingLot = new ParkingLot();
         int capacity = parkingLot.getCapacity();
         Assert.assertEquals(10, capacity);
     }
@@ -17,5 +22,12 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(7);
         int capacity = parkingLot.getCapacity();
         Assert.assertEquals(7, capacity);
+    }
+
+    @Test
+    public void should_return_parking_ticket_when_parking_boy_park() {
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingTicket parkingTicket = parkingBoy.park(new Car());
+        Assert.assertNotNull(parkingTicket);
     }
 }
