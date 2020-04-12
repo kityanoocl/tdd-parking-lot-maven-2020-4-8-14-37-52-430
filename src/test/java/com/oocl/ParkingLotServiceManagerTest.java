@@ -243,4 +243,19 @@ public class ParkingLotServiceManagerTest {
         Car carThatFetch = parkingLotServiceManager.askParkingBoyToFetch(parkingTicket);
         Assert.assertEquals(car, carThatFetch);
     }
+
+    @Test
+    public void should_return_error_when_manager_ask_parking_boy_to_park_a_null_car() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        ParkingTicket parkingTicket = parkingLotServiceManager.askParkingBoyToPark(null);
+        Assert.assertNull(parkingTicket);
+    }
 }
