@@ -271,7 +271,6 @@ public class ParkingLotServiceManagerTest {
         parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
         parkingBoy.park(new Car());
         Car car = new Car();
-        ParkingTicket parkingTicket = parkingLotServiceManager.askParkingBoyToPark(car);
-        Assert.assertNull(parkingTicket);
+        parkingLotServiceManager.askParkingBoyToPark(car);
     }
 }
