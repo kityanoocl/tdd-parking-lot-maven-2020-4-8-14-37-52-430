@@ -50,6 +50,16 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public Car askParkingBoyToFetch(ParkingTicket parkingTicket) {
-        return new Car();
+        ParkingBoy parkingBoyWithCar = parkingBoys.stream().filter(parkingBoy -> {
+            try {
+                return parkingBoy.canFetchCar(parkingTicket);
+            } catch (Exception exception) {
+                return false;
+            }
+        }).findFirst().orElse(null);
+        if (parkingBoyWithCar == null) {
+            return null;
+        }
+        return parkingBoyWithCar.fetch(parkingTicket);
     }
 }
