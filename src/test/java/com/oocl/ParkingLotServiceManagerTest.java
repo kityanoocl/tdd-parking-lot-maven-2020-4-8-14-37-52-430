@@ -289,4 +289,20 @@ public class ParkingLotServiceManagerTest {
         parkingLotServiceManager.askParkingBoyToPark(car);
         parkingLotServiceManager.askParkingBoyToFetch(new ParkingTicket());
     }
+
+    @Test
+    public void should_return_error_when_manager_give_parking_boys_null_ticket() {
+        exceptionRule.expect(NullParkingTicketException.class);
+        exceptionRule.expectMessage("Please provide your parking ticket.");
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot(1));
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        parkingLotServiceManager.askParkingBoyToPark(car);
+        parkingLotServiceManager.askParkingBoyToFetch(null);
+    }
 }
