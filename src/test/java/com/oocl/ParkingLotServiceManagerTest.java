@@ -195,4 +195,20 @@ public class ParkingLotServiceManagerTest {
         parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
         parkingLotServiceManager.fetch(smartParkingBoy, new ParkingTicket());
     }
+
+    @Test
+    public void should_park_car_when_manager_ask_parking_boy_to_park() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot);
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        ParkingTicket parkingTicket = parkingLotServiceManager.askParkingBoyToPark(car);
+        Car carThatFetch = parkingBoy.fetch(parkingTicket);
+        Assert.assertEquals(car, carThatFetch);
+    }
 }
