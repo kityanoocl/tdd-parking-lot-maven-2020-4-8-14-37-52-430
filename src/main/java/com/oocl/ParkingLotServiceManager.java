@@ -42,10 +42,8 @@ public class ParkingLotServiceManager extends ParkingBoy {
             } catch (Exception exception) {
                 return false;
             }
-        }).findFirst().orElse(null);
-        if (parkingBoyWithVacancy == null) {
-            return null;
-        }
+        }).findFirst().orElseThrow(() -> new NotEnoughPositionException(NOT_ENOUGH_POSITION));
+
         return parkingBoyWithVacancy.park(car);
     }
 

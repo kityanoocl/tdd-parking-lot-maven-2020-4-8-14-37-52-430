@@ -258,4 +258,20 @@ public class ParkingLotServiceManagerTest {
         ParkingTicket parkingTicket = parkingLotServiceManager.askParkingBoyToPark(null);
         Assert.assertNull(parkingTicket);
     }
+
+    @Test
+    public void should_return_error_when_manager_ask_parking_boys_all_full() {
+        exceptionRule.expect(NotEnoughPositionException.class);
+        exceptionRule.expectMessage("Not enough position.");
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot(1));
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot(0));
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot(0));
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        ParkingTicket parkingTicket = parkingLotServiceManager.askParkingBoyToPark(car);
+        Assert.assertNull(parkingTicket);
+    }
 }
