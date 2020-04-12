@@ -273,4 +273,20 @@ public class ParkingLotServiceManagerTest {
         Car car = new Car();
         parkingLotServiceManager.askParkingBoyToPark(car);
     }
+
+    @Test
+    public void should_return_error_when_manager_give_parking_boys_wrong_ticket() {
+        exceptionRule.expect(UnrecognizedParkingTicketException.class);
+        exceptionRule.expectMessage("Unrecognized parking ticket.");
+        ParkingLotServiceManager parkingLotServiceManager = new ParkingLotServiceManager(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot(1));
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
+        ParkingBoy[] parkingBoys = {parkingBoy, smartParkingBoy, superSmartParkingBoy};
+        parkingLotServiceManager.assignParkingBoyToManagement(parkingBoys);
+        parkingBoy.park(new Car());
+        Car car = new Car();
+        parkingLotServiceManager.askParkingBoyToPark(car);
+        parkingLotServiceManager.askParkingBoyToFetch(new ParkingTicket());
+    }
 }

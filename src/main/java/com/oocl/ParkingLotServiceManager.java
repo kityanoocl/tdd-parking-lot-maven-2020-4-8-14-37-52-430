@@ -48,16 +48,18 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public Car askParkingBoyToFetch(ParkingTicket parkingTicket) {
+        boolean isParkingTicketNull = parkingTicket == null;
+        if (parkingTicket == null) {
+            throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
+        }
         ParkingBoy parkingBoyWithCar = parkingBoys.stream().filter(parkingBoy -> {
             try {
                 return parkingBoy.canFetchCar(parkingTicket);
             } catch (Exception exception) {
                 return false;
             }
-        }).findFirst().orElse(null);
-        if (parkingBoyWithCar == null) {
-            return null;
-        }
+        }).findFirst().orElseThrow(() -> new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET));
+
         return parkingBoyWithCar.fetch(parkingTicket);
     }
 }
