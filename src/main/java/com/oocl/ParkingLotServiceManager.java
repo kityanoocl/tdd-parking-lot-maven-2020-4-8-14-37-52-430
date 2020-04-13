@@ -36,6 +36,10 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public ParkingTicket askParkingBoyToPark(Car car) {
+        boolean isCarNull = car == null;
+        if (isCarNull) {
+            return null;
+        }
         ParkingBoy parkingBoyWithVacancy = parkingBoys.stream().filter(parkingBoy -> {
             try {
                 return parkingBoy.canParkCar(car);
@@ -61,5 +65,23 @@ public class ParkingLotServiceManager extends ParkingBoy {
         }).findFirst().orElseThrow(() -> new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET));
 
         return parkingBoyWithCar.fetch(parkingTicket);
+    }
+
+    @Override
+    public ParkingTicket park(Car car) {
+        try {
+            return super.park(car);
+        } catch (Exception exceptionThrownByManager) {
+            return askParkingBoyToPark(car);
+        }
+    }
+
+    @Override
+    public Car fetch(ParkingTicket parkingTicket) {
+        try {
+            return super.fetch(parkingTicket);
+        } catch (Exception exceptionThrownByManager) {
+            return askParkingBoyToFetch(parkingTicket);
+        }
     }
 }
