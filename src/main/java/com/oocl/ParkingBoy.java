@@ -58,7 +58,7 @@ public class ParkingBoy {
     }
 
     public boolean canFetchCar(ParkingTicket parkingTicket) {
-        return parkingLots.stream().allMatch(parkingLot -> parkingLot.isTicketExist(parkingTicket));
+        return parkingLots.stream().anyMatch(parkingLot -> parkingLot.isTicketExist(parkingTicket));
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
