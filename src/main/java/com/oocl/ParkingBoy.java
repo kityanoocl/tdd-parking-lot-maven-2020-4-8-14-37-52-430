@@ -34,7 +34,11 @@ public class ParkingBoy {
 
     public boolean canParkCar(Car car) {
         boolean isCarNull = car == null;
-        if (isCarNull || isCarExistParkingLot(car)) {
+        if (isCarNull) {
+            return false;
+        }
+
+        if (isCarExistParkingLot(car)) {
             return false;
         }
 
@@ -42,8 +46,6 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) {
-        selectedParkingLot = getAvailableParkingLot();
-
         if (isParkingLotsFull()) {
             throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
         }
@@ -53,6 +55,7 @@ public class ParkingBoy {
         }
 
         ParkingTicket parkingTicket = new ParkingTicket();
+        selectedParkingLot = getAvailableParkingLot();
         selectedParkingLot.park(parkingTicket, car);
         return parkingTicket;
     }
@@ -62,7 +65,8 @@ public class ParkingBoy {
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
-        if (parkingTicket == null) {
+        boolean isParkingTicketNull = parkingTicket == null;
+        if (isParkingTicketNull) {
             throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         }
 
