@@ -10,7 +10,6 @@ public class ParkingBoy {
     public final static String NOT_ENOUGH_POSITION = "Not enough position.";
     protected List<ParkingLot> parkingLots = new ArrayList<>();
     private ParkingLot selectedParkingLot;
-    private String previousErrorMsg;
 
     public ParkingBoy(ParkingLot... parkingLots) {
         this.parkingLots.addAll(Arrays.asList(parkingLots));
@@ -30,24 +29,26 @@ public class ParkingBoy {
     }
 
     public boolean canParkCar(Car car) {
-        selectedParkingLot = getAvailableParkingLot();
         boolean isCarNull = car == null;
         boolean isAlreadyPark = getCarExistParkingLot(car) != null;
-        boolean isFull = selectedParkingLot == null;
-        boolean canParkCar = true;
         if (isCarNull || isAlreadyPark) {
-            canParkCar = false;
-        } else if (isFull) {
-            previousErrorMsg = NOT_ENOUGH_POSITION;
-            throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
+            return false;
         }
-        return canParkCar;
+        selectedParkingLot = getAvailableParkingLot();
+        return selectedParkingLot != null;
     }
 
     public ParkingTicket park(Car car) {
+        selectedParkingLot = getAvailableParkingLot();
+        boolean isFull = selectedParkingLot == null;
+        if (isFull) {
+            throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
+        }
+
         if (!canParkCar(car)) {
             return null;
         }
+
         ParkingTicket parkingTicket = new ParkingTicket();
         selectedParkingLot.park(parkingTicket, car);
         return parkingTicket;
@@ -55,25 +56,19 @@ public class ParkingBoy {
 
     public boolean canFetchCar(ParkingTicket parkingTicket) {
         selectedParkingLot = getCarExistParkingLot(parkingTicket);
-        if (parkingTicket == null) {
-            previousErrorMsg = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
-            throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
-        } else if (selectedParkingLot == null) {
-            previousErrorMsg = UNRECOGNIZED_PARKING_TICKET;
-            throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
-        }
-
-        return true;
+        return selectedParkingLot != null;
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
-        if (!canFetchCar(parkingTicket)) {
-            return null;
+        if (parkingTicket == null) {
+            throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         }
-        return selectedParkingLot.fetch(parkingTicket);
-    }
 
-    public String queryError() {
-        return previousErrorMsg;
+        selectedParkingLot = getCarExistParkingLot(parkingTicket);
+        if (selectedParkingLot == null) {
+            throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
+        }
+
+        return selectedParkingLot.fetch(parkingTicket);
     }
 }

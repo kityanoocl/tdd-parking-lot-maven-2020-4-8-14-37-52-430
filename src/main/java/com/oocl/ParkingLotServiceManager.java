@@ -40,29 +40,20 @@ public class ParkingLotServiceManager extends ParkingBoy {
         if (isCarNull) {
             return null;
         }
-        ParkingBoy parkingBoyWithVacancy = parkingBoys.stream().filter(parkingBoy -> {
-            try {
-                return parkingBoy.canParkCar(car);
-            } catch (Exception exception) {
-                return false;
-            }
-        }).findFirst().orElseThrow(() -> new NotEnoughPositionException(NOT_ENOUGH_POSITION));
+        ParkingBoy parkingBoyWithVacancy = parkingBoys.stream().filter(parkingBoy -> parkingBoy.canParkCar(car)).findFirst().orElse(null);
+        if (parkingBoyWithVacancy == null) {
+            throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
+        }
 
         return parkingBoyWithVacancy.park(car);
     }
 
     public Car askParkingBoyToFetch(ParkingTicket parkingTicket) {
         boolean isParkingTicketNull = parkingTicket == null;
-        if (parkingTicket == null) {
+        if (isParkingTicketNull) {
             throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         }
-        ParkingBoy parkingBoyWithCar = parkingBoys.stream().filter(parkingBoy -> {
-            try {
-                return parkingBoy.canFetchCar(parkingTicket);
-            } catch (Exception exception) {
-                return false;
-            }
-        }).findFirst().orElseThrow(() -> new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET));
+        ParkingBoy parkingBoyWithCar = parkingBoys.stream().filter(parkingBoy -> parkingBoy.canFetchCar(parkingTicket)).findFirst().orElseThrow(() -> new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET));
 
         return parkingBoyWithCar.fetch(parkingTicket);
     }
