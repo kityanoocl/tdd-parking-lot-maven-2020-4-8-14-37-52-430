@@ -40,10 +40,7 @@ public class ParkingLotServiceManager extends ParkingBoy {
         if (isCarNull) {
             return null;
         }
-        ParkingBoy parkingBoyWithVacancy = parkingBoys.stream().filter(parkingBoy -> parkingBoy.canParkCar(car)).findFirst().orElse(null);
-        if (parkingBoyWithVacancy == null) {
-            throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
-        }
+        ParkingBoy parkingBoyWithVacancy = parkingBoys.stream().filter(parkingBoy -> parkingBoy.canParkCar(car)).findFirst().orElseThrow(() -> new NotEnoughPositionException(NOT_ENOUGH_POSITION));
 
         return parkingBoyWithVacancy.park(car);
     }

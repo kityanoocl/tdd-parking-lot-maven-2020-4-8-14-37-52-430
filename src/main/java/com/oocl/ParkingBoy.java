@@ -24,24 +24,27 @@ public class ParkingBoy {
         return parkingLots.stream().filter(parkingLot -> parkingLot.isTicketExist(parkingTicket)).findFirst().orElse(null);
     }
 
-    public ParkingLot getCarExistParkingLot(Car car) {
-        return parkingLots.stream().filter(parkingLot -> parkingLot.isCarParked(car)).findFirst().orElse(null);
+    public boolean isCarExistParkingLot(Car car) {
+        return parkingLots.stream().anyMatch(parkingLot -> parkingLot.isCarParked(car));
+    }
+
+    public boolean isParkingLotsFull() {
+        return parkingLots.stream().allMatch(ParkingLot::isFull);
     }
 
     public boolean canParkCar(Car car) {
         boolean isCarNull = car == null;
-        boolean isAlreadyPark = getCarExistParkingLot(car) != null;
-        if (isCarNull || isAlreadyPark) {
+        if (isCarNull || isCarExistParkingLot(car)) {
             return false;
         }
-        selectedParkingLot = getAvailableParkingLot();
-        return selectedParkingLot != null;
+
+        return !isParkingLotsFull();
     }
 
     public ParkingTicket park(Car car) {
         selectedParkingLot = getAvailableParkingLot();
-        boolean isFull = selectedParkingLot == null;
-        if (isFull) {
+
+        if (isParkingLotsFull()) {
             throw new NotEnoughPositionException(NOT_ENOUGH_POSITION);
         }
 
@@ -55,8 +58,7 @@ public class ParkingBoy {
     }
 
     public boolean canFetchCar(ParkingTicket parkingTicket) {
-        selectedParkingLot = getCarExistParkingLot(parkingTicket);
-        return selectedParkingLot != null;
+        return parkingLots.stream().allMatch(parkingLot -> parkingLot.isTicketExist(parkingTicket));
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
@@ -64,11 +66,11 @@ public class ParkingBoy {
             throw new NullParkingTicketException(PLEASE_PROVIDE_YOUR_PARKING_TICKET);
         }
 
-        selectedParkingLot = getCarExistParkingLot(parkingTicket);
-        if (selectedParkingLot == null) {
+        if (!canFetchCar(parkingTicket)) {
             throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
         }
 
+        selectedParkingLot = getCarExistParkingLot(parkingTicket);
         return selectedParkingLot.fetch(parkingTicket);
     }
 }
