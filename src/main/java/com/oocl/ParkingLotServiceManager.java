@@ -20,16 +20,16 @@ public class ParkingLotServiceManager extends ParkingBoy {
     }
 
     public ParkingTicket park(ParkingBoy selectedParkingBoy, Car car) {
-        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy -> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
-        if (isParkingBoyNotExist) {
+        boolean isSelectedParkingBoyNotInParkingBoys = !parkingBoys.contains(selectedParkingBoy);
+        if (isSelectedParkingBoyNotInParkingBoys) {
             return null;
         }
         return selectedParkingBoy.park(car);
     }
 
     public Car fetch(ParkingBoy selectedParkingBoy, ParkingTicket parkingTicket) {
-        boolean isParkingBoyNotExist = parkingBoys.stream().filter(parkingBoy -> parkingBoy == selectedParkingBoy).findFirst().orElse(null) == null;
-        if (isParkingBoyNotExist) {
+        boolean isSelectedParkingBoyNotInParkingBoys = !parkingBoys.contains(selectedParkingBoy);
+        if (isSelectedParkingBoyNotInParkingBoys) {
             return null;
         }
         return selectedParkingBoy.fetch(parkingTicket);
