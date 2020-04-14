@@ -70,18 +70,18 @@ public class ParkingLotServiceManager extends ParkingBoy {
     @Override
     public ParkingTicket park(Car car) {
         try {
-            return super.park(car);
-        } catch (Exception exceptionThrownByManager) {
             return askParkingBoyToPark(car);
+        } catch (Exception exceptionThrownByParkingBoys) {
+            return super.park(car);
         }
     }
 
     @Override
     public Car fetch(ParkingTicket parkingTicket) {
         try {
-            return super.fetch(parkingTicket);
-        } catch (Exception exceptionThrownByManager) {
             return askParkingBoyToFetch(parkingTicket);
+        } catch (Exception exceptionThrownByParkingBoys) {
+            return super.fetch(parkingTicket);
         }
     }
 }
