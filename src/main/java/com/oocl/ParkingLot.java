@@ -45,6 +45,6 @@ public class ParkingLot {
     }
 
     public double getPositionRate() {
-        return (this.capacity - parkingMap.size()) / (this.capacity * 1.0);
+        return (double) (this.capacity - parkingMap.size()) / this.capacity;
     }
 }
